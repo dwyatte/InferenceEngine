@@ -55,3 +55,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# misc
+venv
+.idea
+.DS_Store
+*~
