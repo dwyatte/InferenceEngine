@@ -22,11 +22,11 @@ var sigCanvas = new sigma(
 		},
 		settings: 
 		{
-			defaultNodeColor: "#ec5148",
-			defaultEdgeColor: "#ec5148",
+			defaultLabelColor: "#FFFFFF",
+			defaultEdgeColor: "rgb(175,175,175)",
 			edgeColor: "default",
 			minEdgeSize: 1,
-			maxEdgeSize: 3
+			maxEdgeSize: 2
 		},
 	});
 
@@ -44,7 +44,7 @@ sigCanvas.bind('overNode', function(e) {
       }	
       else
       {
-	  	n.color = '#eee';
+	  	n.color = 'rgb(25,25,25)';
 	  	n.label = "";
       }
     });
@@ -52,11 +52,11 @@ sigCanvas.bind('overNode', function(e) {
     sigCanvas.graph.edges().forEach(function(e) {
       if (neighs[e.source] && neighs[e.target])
       {
-      	e.size = 3;
-    	e.color = e.originalColor;
+      	e.size = 2;
+    	e.color = "rgb(225,225,225)";
       }
       else
-        e.color = '#eee';
+        e.color = 'rgb(25,25,25)';
     });
 
     sigCanvas.refresh();
@@ -101,6 +101,19 @@ function timer() {
 		  function() {
 		  	console.log(sigCanvas.graph.nodes())
 			sigCanvas.graph.nodes().forEach(function(n) {
+				console.log(n);
+				if(n.label[0] == "i")
+				{
+					n.color = "#00BFFF"
+				}
+				if(n.label[0] == "l")
+				{
+					n.color = "#23E3B5"
+				}
+				if(n.label[0] == "o")
+				{
+					n.color = "#9370DB"
+				}
 				n.originalLabel = n.label;
 				n.originalColor = n.color;
 			});
@@ -111,6 +124,7 @@ function timer() {
 
 			});
 		    sigCanvas.refresh();
+
 		  }
 		);
 
