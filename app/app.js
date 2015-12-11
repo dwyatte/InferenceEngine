@@ -1,14 +1,21 @@
 var express = require('express');
 var app = express();
 var fs = require("fs");
+var $ = require('jquery');
+var http = require('http');
 
-var filename = "foo.gexf";
+var filename = "View/data.json";
+// var filename = "foo.gexf";
+var changed = "0";
 
-fs.watch(filename, {
+
+fs.watchFile(filename, {
   persistent: true
 }, function(event, filename) {
-  console.log(event + " event occurred on " + filename);
+	console.log("changed");
+	changed = "1";
 });
+
 
 app.use(express.static(__dirname + '/View'));
 
@@ -16,6 +23,11 @@ app.use(express.static(__dirname + '/View'));
 app.get('/', function(req, res) {
   res.sendFile('index.html');
 });
+
+app.get('/changed', function(req, res) {
+	res.send(changed);
+	changed = "0";
+})
 
 
 var server = app.listen(3000, function () {
