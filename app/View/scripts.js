@@ -27,7 +27,7 @@ var sigCanvas = new sigma(
 			edgeColor: "default",
 			minEdgeSize: 1,
 			maxEdgeSize: 2,
-			labelThreshold: 10,
+			labelThreshold: 9,
 			animationsTime: 1000
 		},
 	});
@@ -108,19 +108,8 @@ sigCanvas.bind('outNode', function(e) {
 
 
 
-setInterval(timer, 1000);
-function timer() {
-	// if(needsUpdate == "1" || firstTime)
-	// {
-	// 	sigma.plugins.animate(
-	// 		    sigCanvas,
-	// 		    {
-	// 		      x: "condensedX",
-	// 		      y: "condensedY",
-	// 		    }
-	// 	  	);
-	// }
-	
+setInterval(timer, 500);
+function timer() {	
 
 	var needsUpdate = "0";
 	var xhttp = new XMLHttpRequest();
