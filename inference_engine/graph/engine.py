@@ -2,7 +2,6 @@ import sys
 import time
 import pprint
 import json
-import itertools
 from networkx import Graph, write_gexf, spring_layout
 from threading import Thread
 from inference_engine.graph.core import GraphCore
