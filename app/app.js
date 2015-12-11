@@ -12,7 +12,6 @@ var changed = "0";
 fs.watchFile(filename, {
   persistent: true
 }, function(event, filename) {
-	console.log("changed");
 	changed = "1";
 });
 

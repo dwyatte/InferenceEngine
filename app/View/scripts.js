@@ -18,13 +18,15 @@ var sigCanvas = new sigma(
 		container: 'graph-Contain',
 		renderer: {
 			container: document.getElementById('graph-Contain'),
+			type: 'canvas'
 		},
 		settings: 
 		{
 			defaultNodeColor: "#ec5148",
 			defaultEdgeColor: "#ec5148",
 			edgeColor: "default",
-			edgeLableSize: 'proportional'
+			minEdgeSize: 1,
+			maxEdgeSize: 3
 		},
 	});
 
@@ -49,7 +51,10 @@ sigCanvas.bind('overNode', function(e) {
 
     sigCanvas.graph.edges().forEach(function(e) {
       if (neighs[e.source] && neighs[e.target])
-        e.color = e.originalColor;
+      {
+      	e.size = 3;
+    	e.color = e.originalColor;
+      }
       else
         e.color = '#eee';
     });
@@ -65,7 +70,8 @@ sigCanvas.bind('outNode', function(e) {
     });
 
     sigCanvas.graph.edges().forEach(function(e) {
-      e.color = e.originalColor;
+    	e.size = e.originalSize;
+     	e.color = e.originalColor;
     });
 
     sigCanvas.refresh();
@@ -99,7 +105,10 @@ function timer() {
 				n.originalColor = n.color;
 			});
 			sigCanvas.graph.edges().forEach(function(e) {
+				e.originalSize = e.size;
 				e.originalColor = e.color;
+				e.type = 'curve';
+
 			});
 		    sigCanvas.refresh();
 		  }
