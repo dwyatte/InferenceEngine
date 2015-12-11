@@ -6,7 +6,7 @@ ES_HOST = '10.1.20.125'
 ES_PORT = '9200'
 ES_INDEX = 'logsar-internaldeploymenttestrestore-*'
 RECORD_FILTER = ['login', 'originIp', 'originName', 'impactedIp', 'impactedName']
-QUERY_OUTPUT = 'output.json'
+QUERY_OUTPUT = 'app/View/data.json'
 MAX_NODES = 1e5
 MAX_EDGES = 1e6
 

@@ -17,7 +17,7 @@ setInterval(timer, 1000);
 function timer() {
 	console.log("HERE");
 	sigma.parsers.json(
-	  'test.json',
+	  'data.json',
 	  test,
 	  function() {
 	    test.refresh();
