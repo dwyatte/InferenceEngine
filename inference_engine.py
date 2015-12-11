@@ -1,31 +1,27 @@
-import json
 import time
-import numpy as np
-# import matplotlib
-# import matplotlib.pyplot as plt
-
-from inference_engine.elastic_stream import ElasticStream
-from inference_engine.graph_engine import GraphEngine
+from inference_engine.elastic import ElasticStream
+from inference_engine.graph import GraphEngine
 
 ES_HOST = '10.1.20.125'
 ES_PORT = '9200'
 ES_INDEX = 'logsar-internaldeploymenttestrestore-*'
 RECORD_FILTER = ['login', 'originIp', 'originName', 'impactedIp', 'impactedName']
+QUERY_OUTPUT = 'output.json'
+MAX_NODES = 1e5
+MAX_EDGES = 1e6
 
 if __name__ == '__main__':
 
-    with open('queries/match_all.json') as f:
-        data = json.dumps(json.load(f))
+    es = ElasticStream(ES_HOST, ES_PORT, ES_INDEX,
+                       '{"query": {"match_all": {}}}',
+                       scroll_keep_alive='1m', scroll_size=100)
 
-    es = ElasticStream(ES_HOST, ES_PORT, ES_INDEX, data)
-    ge = GraphEngine()
+    ge = GraphEngine(es, record_filter=RECORD_FILTER, query_output=QUERY_OUTPUT,
+                     max_nodes=MAX_NODES, max_edges=MAX_EDGES, verbose=False)
+    ge.start()
+    time.sleep(1)
 
-    for records in es:
-        start_time = time.time()
-        # filter and remove empties
-        records = [dict([(k, record[k]) for k in RECORD_FILTER if k in record]) for record in records]
-        records = [record for record in records if len(record) > 1]
-        ge.insert(records)
-        elapsed_time = time.time() - start_time
-        print 'GraphEngine: %d nodes, %d edges, (insert time: %f seconds)' % \
-              (ge.number_of_nodes(), ge.number_of_edges(), elapsed_time)
+    print
+    print 'GraphEngine (ge) started.\n' \
+          'Nodes with highest degree: %s\n' \
+          'Query with ge.query_node([node])\n' % ge.query_topk_nodes_degree(3)
