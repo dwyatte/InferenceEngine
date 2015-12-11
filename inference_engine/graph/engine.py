@@ -2,7 +2,8 @@ import sys
 import time
 import pprint
 import json
-from networkx import Graph, write_gexf, spring_layout
+from ego import egonet
+from networkx import Graph, write_gexf, spring_layout, to_edgelist
 from threading import Thread
 from inference_engine.graph.core import GraphCore
 
@@ -90,16 +91,39 @@ class GraphEngine(GraphCore, Thread):
         degree = self.degree()
         return sorted(zip(degree.values(), degree.keys()))[-k:]
 
-    def query_node(self, node):
+    def _query_node_subnet(self, node):
         """
+
+        Parameters
+        ----------
+        node
 
         Returns
         -------
-
+        ebunch
         """
         neighbors = self.neighbors(node)
-        ebunch = [(node, n, self.get_edge_data(node, n)['weight']) for n in neighbors]
+        return [(node, n, self.get_edge_data(node, n)['weight']) for n in neighbors]
 
+    def _query_node_egonet(self, node):
+        """
+
+        Parameters
+        ----------
+        node
+
+        Returns
+        -------
+        ebunch
+        """
+        ego = egonet(self, node)
+        # return the edge bunch
+        return [(e[0], e[1], e[2]['weight']) for e in to_edgelist(ego)]
+
+
+    def query_node(self, node):
+        # ebunch = self._query_node_subnet(node)
+        ebunch = self._query_node_egonet(node)
         if self.query_output:
             pprint.pprint(ebunch)
             # return self.write_gexf(ebunch, self.query_output)  # doesn't seem to work with SigmaJS
