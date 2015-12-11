@@ -5,12 +5,14 @@ var $ = require('jquery');
 var http = require('http');
 
 var filename = "View/data.json";
+// var filename = "foo.gexf";
 var changed = "0";
 
 
 fs.watchFile(filename, {
   persistent: true
 }, function(event, filename) {
+	console.log("changed");
 	changed = "1";
 });
 

@@ -21,6 +21,8 @@ var sigCanvas = new sigma(
 		},
 		settings: 
 		{
+			defaultNodeColor: "#ec5148",
+			defaultEdgeColor: "#ec5148",
 			edgeColor: "default",
 			edgeLableSize: 'proportional'
 		},
