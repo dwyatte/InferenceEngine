@@ -18,13 +18,15 @@ var sigCanvas = new sigma(
 		container: 'graph-Contain',
 		renderer: {
 			container: document.getElementById('graph-Contain'),
+			type: 'canvas'
 		},
 		settings: 
 		{
-			defaultNodeColor: "#ec5148",
-			defaultEdgeColor: "#ec5148",
+			defaultLabelColor: "#FFFFFF",
+			defaultEdgeColor: "rgb(175,175,175)",
 			edgeColor: "default",
-			edgeLableSize: 'proportional'
+			minEdgeSize: 1,
+			maxEdgeSize: 2
 		},
 	});
 
@@ -42,16 +44,19 @@ sigCanvas.bind('overNode', function(e) {
       }	
       else
       {
-	  	n.color = '#eee';
+	  	n.color = 'rgb(25,25,25)';
 	  	n.label = "";
       }
     });
 
     sigCanvas.graph.edges().forEach(function(e) {
       if (neighs[e.source] && neighs[e.target])
-        e.color = e.originalColor;
+      {
+      	e.size = 2;
+    	e.color = "rgb(225,225,225)";
+      }
       else
-        e.color = '#eee';
+        e.color = 'rgb(25,25,25)';
     });
 
     sigCanvas.refresh();
@@ -65,7 +70,8 @@ sigCanvas.bind('outNode', function(e) {
     });
 
     sigCanvas.graph.edges().forEach(function(e) {
-      e.color = e.originalColor;
+    	e.size = e.originalSize;
+     	e.color = e.originalColor;
     });
 
     sigCanvas.refresh();
@@ -95,13 +101,30 @@ function timer() {
 		  function() {
 		  	console.log(sigCanvas.graph.nodes())
 			sigCanvas.graph.nodes().forEach(function(n) {
+				console.log(n);
+				if(n.label[0] == "i")
+				{
+					n.color = "#00BFFF"
+				}
+				if(n.label[0] == "l")
+				{
+					n.color = "#23E3B5"
+				}
+				if(n.label[0] == "o")
+				{
+					n.color = "#9370DB"
+				}
 				n.originalLabel = n.label;
 				n.originalColor = n.color;
 			});
 			sigCanvas.graph.edges().forEach(function(e) {
+				e.originalSize = e.size;
 				e.originalColor = e.color;
+				e.type = 'curve';
+
 			});
 		    sigCanvas.refresh();
+
 		  }
 		);
 
