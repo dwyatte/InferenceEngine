@@ -1,2 +1,2 @@
-from core import GraphCore
+from shell import GraphShell
 from engine import GraphEngine

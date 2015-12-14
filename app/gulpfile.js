@@ -7,7 +7,6 @@ var rename  = require('gulp-rename');
 var concat  = require('gulp-concat');
 var inject  = require('gulp-inject');
 var clean   = require('gulp-clean');
-var print   = require('gulp-print');
 var nodemon = require('gulp-nodemon');
 
 //Paths of dependencies
