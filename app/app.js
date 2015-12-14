@@ -4,7 +4,7 @@ var fs = require("fs");
 var $ = require('jquery');
 var http = require('http');
 
-var filename = "View/data.json";
+var filename = "data/data.json";
 // var filename = "foo.gexf";
 var changed = "0";
 
@@ -16,7 +16,7 @@ fs.watchFile(filename, {
 });
 
 
-app.use(express.static(__dirname + '/View'));
+app.use(express.static(__dirname + '/dist'));
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', function(req, res) {
@@ -30,8 +30,5 @@ app.get('/changed', function(req, res) {
 
 
 var server = app.listen(3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-
   console.log('Example app listening on port 3000');
 });
