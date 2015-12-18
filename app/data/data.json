@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "id": "n0",
+      "label": "A node",
+      "x": 0,
+      "y": 0,
+      "color": "#ec5148",
+      "size": 3
+    },
+    {
+      "id": "n1",
+      "label": "Another node",
+      "x": 3,
+      "y": 1,
+      "color": "#ec5148",
+      "size": 3
+    },
+    {
+      "id": "n2",
+      "label": "And a last one",
+      "x": 1,
+      "y": 3,
+      "color": "#ec5148",
+      "size": 3
+    },
+    {
+      "id": "n3",
+      "label": "test one",
+      "x": 4,
+      "y": 5,
+      "color": "#ec5148",
+      "size": 3
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "n0",
+      "color": "#ec5148",
+      "target": "n1",
+      "size": 3
+    },
+    {
+      "id": "e1",
+      "source": "n1",
+      "color": "#ec5148",
+      "target": "n2",
+      "size": 3
+    },
+    {
+      "id": "e2",
+      "source": "n2",
+      "color": "#ec5148",
+      "target": "n0",
+      "size": 3
+    },
+    {
+      "id": "e3",
+      "source": "n3",
+      "color": "#ec5148",
+      "target": "n0",
+      "size": 3
+    }
+  ]
+}
