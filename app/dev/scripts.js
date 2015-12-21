@@ -78,52 +78,9 @@ sigCanvas.bind('outNode', function(e) {
 });
 
 
-
-setInterval(timer, 500);
-function timer() {	
-
-	var needsUpdate = "0";
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if(xhttp.readyState == 4 && xhttp.status == 200)
-		{
-			needsUpdate = xhttp.responseText;
-		}
-	};
-	xhttp.open("GET", "http://localhost:3000/changed", false);
-	xhttp.send();
-
-	if(needsUpdate == "1" || firstTime)
-	{
-		if(!firstTime)
-		{
-			console.log("HERE");
-			sigma.plugins.animate(
-			    sigCanvas,
-			    {
-			      x: "condensedX",
-			      y: "condensedY",
-			    },
-			    {
-		    		onComplete: function(){
-				    		doUpdate();
-				    	}
-			    } 
-		  	);
-		}
-		else
-		{
-			doUpdate();
-		}
-		needsUpdate = "";
-		firstTime = false;
-	}
-	
-}
-
-
 var doUpdate = function()
 {
+	console.log("starting update");
 	sigma.parsers.json(
 		  'data/data.json',
 		  sigCanvas,
@@ -172,3 +129,26 @@ var doUpdate = function()
 		  }
 		);
 };
+
+
+doUpdate();
+var socket = io.connect('http://localhost:4000');
+
+socket.on('Changed', function(data) {
+	console.log("received update signal");
+	sigma.plugins.animate(
+			    sigCanvas,
+			    {
+			      x: "condensedX",
+			      y: "condensedY",
+			    },
+			    {
+		    		onComplete: function(){
+						    		doUpdate();
+						    	}
+			    } 
+		  	);
+});
+
+
+
