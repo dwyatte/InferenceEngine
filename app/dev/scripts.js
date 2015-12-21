@@ -80,7 +80,6 @@ sigCanvas.bind('outNode', function(e) {
 
 var doUpdate = function()
 {
-	console.log("starting update");
 	sigma.parsers.json(
 		  'data/data.json',
 		  sigCanvas,
@@ -135,7 +134,6 @@ doUpdate();
 var socket = io.connect('http://localhost:4000');
 
 socket.on('Changed', function(data) {
-	console.log("received update signal");
 	sigma.plugins.animate(
 			    sigCanvas,
 			    {
