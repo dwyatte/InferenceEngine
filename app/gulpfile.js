@@ -8,6 +8,7 @@ var concat  = require('gulp-concat');
 var inject  = require('gulp-inject');
 var clean   = require('gulp-clean');
 var nodemon = require('gulp-nodemon');
+var merge   = require('merge-stream');
 
 //Paths of dependencies
 var paths = [
@@ -27,8 +28,15 @@ gulp.task('clean', function(){
 });
 
 gulp.task('buildVendorScripts', function(){
-    return gulp.src('node_modules/sigma/build/**/**.min.js')
-        .pipe(gulp.dest('dist/node_modules'));
+    var sigmaScripts =
+        gulp.src('node_modules/sigma/build/**/**.min.js')
+        .pipe(gulp.dest('dist/node_modules/sigma'));
+
+    var ioScripts = 
+        gulp.src('node_modules/socket.io/node_modules/socket.io-client/socket.io.js')
+        .pipe(gulp.dest('dist/node_modules/io'));
+
+    return merge(sigmaScripts, ioScripts);
 });
 
 gulp.task('deployData', function(){
